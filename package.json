@@ -1,0 +1,16 @@
+{
+  "name": "dokkansimulatormodule",
+  "version": "1.0.0",
+  "description": "A simulator for the mobile game Dragonball Z DokkanBattle",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0"
+  }
+}

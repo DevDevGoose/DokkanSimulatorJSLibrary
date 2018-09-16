@@ -1,28 +1,19 @@
 // --- Order of operations ---
-// Percentage-based leader skills CHECK
-// Flat leader skills CHECK
-// Percentage-based start of turn passives CHECK
-// This is where start of turn +ATK support passives go. CHECK
-// This is also where nuking style passives are factored in. CHECK
-// Flat start of turn passives CHECK
-// Percentage-based links CHECK
-// Flat links CHECK
-// Ki multiplier CHECK
-// Build-up passives CHECK
+// Percentage-based leader skills
+// Flat leader skills
+// Percentage-based start of turn passives
+// This is where start of turn +ATK support passives go.
+// This is also where nuking style passives are factored in.
+// Flat start of turn passives
+// Percentage-based links
+// Flat links
+// Ki multiplier
+// Build-up passives
 // On Attack/on SA percentage-based passives
 // On Attack/on SA flat passives
-
 // SA multiplier
 // SA-based ATK increases are factored in here as flat additions to the SA multiplier.
 
-
-// TODO: Refactor - Create function for 'applyMultiplier(card,multiplierName)' and 'applyFlat(card,flatName)'
-// passing the name of the arguments from an array being looped over for the correct order of operations
-
-// TODO: Cards functions need to work in single and team environment
-// TODO: Check whether SA Based ally buffs are calculated in the team support passives or SA Multiplier sections.
-
-// TODO: Make additionals not have on SA passives if not an SA
 
 class DokkanSim {
 
@@ -30,7 +21,7 @@ class DokkanSim {
   // Requires: [validCardObjectHash, number, [leaderKi, leaderAttackPercentage, leaderAttackFlat, leaderNukeFunction], [leaderKi, leaderAttackPercentage, leaderAttackFlat, leaderNukeFunction], ['linkName1','linkName2','etc'],[numberFlatKi, numberFlatAttack, numberPercentageAttack]]
   static singleSim(card, turnMaxInt, leaderSkillOneArray, leaderSkillTwoArray, activeLinksArray, teamPassivesArray) {
     let damageArray = [];
-    let linkSkillData = { 'Fierce Battle': ['percentage', 0.15], 'Hero of Justice': ['percentage', 0.25], 'Legendary Power': ['flat', 5000] };
+    let linkSkillData = { 'Fierce Battle': ['percentage', 0.15], 'Big Bad Bosses':['percentage', 0.25], 'Brainiacs': ['percentage', 0.10], 'Majin': ['percentage', 0.10], 'Berserker': ['percentage', 0.20], 'Blazing Battle': ['percentage', 0.15], 'Bombardment': ['percentage', 0.15], 'Brutal Beatdown': ['percentage', 0.10], 'Budding Warrior': ['percentage', 0.10], 'Cooras Armored Squad': ['percentage', 0.25], 'Deficit Boost': ['percentage', 0.15], 'Demon Duo': ['percentage', 0.20], 'Destroyer of the Universe': ['percentage', 0.25], 'Experienced Fighters': ['percentage', 0.10], 'Formidable Enemy': ['percentage', 0.10], 'Galactic Warriors': ['percentage', 0.20], 'Godly Power': ['percentage', 0.15], 'Guidance of the Dragon Balls': ['percentage', 0.20], 'Hero of Justice': ['percentage', 0.25], 'Infighter': ['percentage', 10], 'Master of Magic': ['percentage', 0.15], 'Nightmare': ['percentage', 0.10], 'Over 9000': ['percentage', 0.10], 'Penguin Village Adventure': ['percentage', 0.15], 'Prodigies': ['percentage', 0.10], 'Rival Duo': ['percentage', 0.10], 'Saiyan Pride': ['percentage', 0.15], 'Saiyan Roar': ['percentage', 0.25], 'Shadow Dragons': ['percentage', 0.15], 'Super-God Combat': ['percentage', 0.15], 'Super Saiyan': ['percentage', 0.10], 'Super Strike': ['percentage', 0.20], 'The First Awakened': ['percentage', 0.25], 'The Ginyu Force': ['percentage', 0.25], 'The Innocents': ['percentage', 0.1], 'The Wall Standing Tall': ['percentage', 0.15], 'Thirst for Conquest': ['percentage', 0.15], 'Universes Most Malevolent': ['percentage', 0.15], 'Warrior Gods': ['percentage', 0.1], 'Xenoverse': ['percentage', 0.2], 'Z Fighters': ['percentage', 0.15], 'Supreme Power': ['flat', 1000], 'Tutle School': ['flat', 500], 'Crane School': ['flat', 500], 'Friezas Minion': ['flat', 300], 'Messenger from the Future': ['flat', 500], 'More Than Meets the Eye': ['flat', 300], 'New': ['flat', 200], 'Respect': ['flat', 500], 'Resurrection F': ['flat', 700], 'RR Army': ['flat', 300], 'Saiyan Warrior Race': ['flat', 700], 'Speedy Retribution': ['flat', 300], 'Tag Team of Terror': ['flat', 500], 'World Tournament Reborn': ['flat', 300], 'Dondon Ray': ['super', 2000], 'Kamehameha': ['super', 2500], 'Legendary Power': ['super', 5000], 'Limit-Breaking Form': ['super', 2500], 'Power Bestowed by God': ['super', 2500], 'Attack of the Clones': ['ki', 1], 'Battlefield Diva': ['ki', 2], 'Best Buddies': ['ki', 1], 'Cooras Underling': ['ki', 1], 'Courage': ['ki', 1], 'Coward': ['ki', 1], 'Demon': ['ki', 1], 'Dismal Future': ['ki', 1], 'Energy Absorption': ['ki', 2], 'Evil Autocrats': ['ki', 1], 'Family Ties': ['ki', 2], 'Fear and Faith': ['ki', 2], 'Flee': ['ki', 1], 'Golden Warrior': ['ki', 1], 'Fortuneteller Babas Fighter': ['ki', 2], 'Fused Fighter': ['ki', 2], 'Fusion': ['ki', 2], 'GT': ['ki', 2], 'Galactic Visitor': ['ki', 1], 'Gaze of Respect': ['ki', 2], 'Gentleman': ['ki', 2], 'Golden Z-Fighter': ['ki', 2], 'Hardened Grudge': ['ki', 1], 'Hatred of Saiyans': ['ki', 2], 'Infinite Energy': ['ki', 2], 'Loyalty': ['ki', 1], 'Majin Resurrection Plan': ['ki', 2], 'Master and Pupil': ['ki', 1], 'Mechnical Menaces': ['ki', 1], 'Money Money Money': ['ki', 1], 'Organic Upgrade': ['ki', 2], 'Over in a Flash': ['ki', 3], 'Patrol': ['ki', 2], 'Prepared for Battle': ['ki', 2], 'Revival': ['ki', 2], 'Royal Lineage': ['ki', 1], 'Scientist': ['ki', 2], 'Shattering the Limit': ['ki', 2], 'Shocking Speed': ['ki', 2], 'Signature Pose': ['ki', 2], 'Soul vs Soul': ['ki', 1], 'Strength in Unity': ['ki', 1], 'Strongest Clan in Space': ['ki', 2], 'Supreme Warrior': ['ki', 1], 'Team Bardock': ['ki', 1], 'Team Turles': ['ki', 1], 'The Hera Clan': ['ki', 2], 'Champions Strength': ['ki', 1], 'The Incredible Adventure': ['ki', 2], 'The Saiyan Lineage': ['ki', 1], 'Transform': ['ki', 2], 'Twin Terrors': ['ki', 2], 'Ultimate Lifeform': ['ki', 2], 'Unbreakable Bond': ['ki', 2], 'Warriors of Universe 6': ['ki', 2], 'World Tournament Champion': ['ki', 1], 'Tournament of Power': ['ki', 3], };
     let leaderKi = leaderSkillOneArray[0] + leaderSkillTwoArray[0];
     let leaderAttackPercentage = 1 + leaderSkillOneArray[1] + leaderSkillTwoArray[1];
     let leaderAttackFlat = leaderSkillOneArray[2] + leaderSkillTwoArray[2];
@@ -166,12 +157,13 @@ class DokkanSim {
 
   static teamSim(teamArray, turnMaxInt, leaderSkillOnePosition, leaderSkillTwoPosition) {
     let damageArray = [{ 'total_damage': 0, 'team': teamArray, 'leader_one': teamArray[leaderSkillOnePosition].title + " - " + teamArray[leaderSkillOnePosition].name, 'leader_two': teamArray[leaderSkillTwoPosition].title + " - " + teamArray[leaderSkillTwoPosition].name, 'turn_info': [] }];
-    let linkSkillData = { 'Fierce Battle': ['percentage', 0.15], 'Hero of Justice': ['percentage', 0.25], 'Legendary Power': ['super', 5000], 'Shocking Speed': ['ki', 2] };
+    let linkSkillData = { 'Fierce Battle': ['percentage', 0.15], 'Big Bad Bosses':['percentage', 0.25], 'Brainiacs': ['percentage', 0.10], 'Majin': ['percentage', 0.10], 'Berserker': ['percentage', 0.20], 'Blazing Battle': ['percentage', 0.15], 'Bombardment': ['percentage', 0.15], 'Brutal Beatdown': ['percentage', 0.10], 'Budding Warrior': ['percentage', 0.10], 'Cooras Armored Squad': ['percentage', 0.25], 'Deficit Boost': ['percentage', 0.15], 'Demon Duo': ['percentage', 0.20], 'Destroyer of the Universe': ['percentage', 0.25], 'Experienced Fighters': ['percentage', 0.10], 'Formidable Enemy': ['percentage', 0.10], 'Galactic Warriors': ['percentage', 0.20], 'Godly Power': ['percentage', 0.15], 'Guidance of the Dragon Balls': ['percentage', 0.20], 'Hero of Justice': ['percentage', 0.25], 'Infighter': ['percentage', 10], 'Master of Magic': ['percentage', 0.15], 'Nightmare': ['percentage', 0.10], 'Over 9000': ['percentage', 0.10], 'Penguin Village Adventure': ['percentage', 0.15], 'Prodigies': ['percentage', 0.10], 'Rival Duo': ['percentage', 0.10], 'Saiyan Pride': ['percentage', 0.15], 'Saiyan Roar': ['percentage', 0.25], 'Shadow Dragons': ['percentage', 0.15], 'Super-God Combat': ['percentage', 0.15], 'Super Saiyan': ['percentage', 0.10], 'Super Strike': ['percentage', 0.20], 'The First Awakened': ['percentage', 0.25], 'The Ginyu Force': ['percentage', 0.25], 'The Innocents': ['percentage', 0.1], 'The Wall Standing Tall': ['percentage', 0.15], 'Thirst for Conquest': ['percentage', 0.15], 'Universes Most Malevolent': ['percentage', 0.15], 'Warrior Gods': ['percentage', 0.1], 'Xenoverse': ['percentage', 0.2], 'Z Fighters': ['percentage', 0.15], 'Supreme Power': ['flat', 1000], 'Tutle School': ['flat', 500], 'Crane School': ['flat', 500], 'Friezas Minion': ['flat', 300], 'Messenger from the Future': ['flat', 500], 'More Than Meets the Eye': ['flat', 300], 'New': ['flat', 200], 'Respect': ['flat', 500], 'Resurrection F': ['flat', 700], 'RR Army': ['flat', 300], 'Saiyan Warrior Race': ['flat', 700], 'Speedy Retribution': ['flat', 300], 'Tag Team of Terror': ['flat', 500], 'World Tournament Reborn': ['flat', 300], 'Dondon Ray': ['super', 2000], 'Kamehameha': ['super', 2500], 'Legendary Power': ['super', 5000], 'Limit-Breaking Form': ['super', 2500], 'Power Bestowed by God': ['super', 2500], 'Attack of the Clones': ['ki', 1], 'Battlefield Diva': ['ki', 2], 'Best Buddies': ['ki', 1], 'Cooras Underling': ['ki', 1], 'Courage': ['ki', 1], 'Coward': ['ki', 1], 'Demon': ['ki', 1], 'Dismal Future': ['ki', 1], 'Energy Absorption': ['ki', 2], 'Evil Autocrats': ['ki', 1], 'Family Ties': ['ki', 2], 'Fear and Faith': ['ki', 2], 'Flee': ['ki', 1], 'Golden Warrior': ['ki', 1], 'Fortuneteller Babas Fighter': ['ki', 2], 'Fused Fighter': ['ki', 2], 'Fusion': ['ki', 2], 'GT': ['ki', 2], 'Galactic Visitor': ['ki', 1], 'Gaze of Respect': ['ki', 2], 'Gentleman': ['ki', 2], 'Golden Z-Fighter': ['ki', 2], 'Hardened Grudge': ['ki', 1], 'Hatred of Saiyans': ['ki', 2], 'Infinite Energy': ['ki', 2], 'Loyalty': ['ki', 1], 'Majin Resurrection Plan': ['ki', 2], 'Master and Pupil': ['ki', 1], 'Mechnical Menaces': ['ki', 1], 'Money Money Money': ['ki', 1], 'Organic Upgrade': ['ki', 2], 'Over in a Flash': ['ki', 3], 'Patrol': ['ki', 2], 'Prepared for Battle': ['ki', 2], 'Revival': ['ki', 2], 'Royal Lineage': ['ki', 1], 'Scientist': ['ki', 2], 'Shattering the Limit': ['ki', 2], 'Shocking Speed': ['ki', 2], 'Signature Pose': ['ki', 2], 'Soul vs Soul': ['ki', 1], 'Strength in Unity': ['ki', 1], 'Strongest Clan in Space': ['ki', 2], 'Supreme Warrior': ['ki', 1], 'Team Bardock': ['ki', 1], 'Team Turles': ['ki', 1], 'The Hera Clan': ['ki', 2], 'Champions Strength': ['ki', 1], 'The Incredible Adventure': ['ki', 2], 'The Saiyan Lineage': ['ki', 1], 'Transform': ['ki', 2], 'Twin Terrors': ['ki', 2], 'Ultimate Lifeform': ['ki', 2], 'Unbreakable Bond': ['ki', 2], 'Warriors of Universe 6': ['ki', 2], 'World Tournament Champion': ['ki', 1], 'Tournament of Power': ['ki', 3], };
     this.teamActivateLeaderSkills(teamArray, leaderSkillOnePosition, leaderSkillTwoPosition);
     for (let turnCount = 1; turnCount <= turnMaxInt; turnCount++) {
       let currentRotation = this.currentRotationGetter(teamArray, turnCount);
       let teamKiArray = [this.generateKiArray(), this.generateKiArray(), this.generateKiArray()];
       let teamPassivesArray = this.getTeamPassives(currentRotation);
+      console.log(teamPassivesArray);
       let activeLinksArray = this.getActiveLinks(currentRotation);
       let turnDamage = { 'turn_count': turnCount, 'rotation': currentRotation, 'active_links': activeLinksArray, 'total_damage': 0, 'damage_info': [] };
       for (let i = 0; i < currentRotation.length; i++) {
@@ -189,7 +181,6 @@ class DokkanSim {
         this.setCurrentKi(currentRotation[i], teamKiArray[i]);
         this.checkMaxKi(currentRotation[i]);
         if (currentRotation[i]['leaderNukeBoost'] || currentRotation[i]['nukePercentage']) {
-          // TODO fix getNukeLeaderIncrease to work with card property ['leaderNukeBoost'] which contains an array ['orbType', boostPercentagePerOrb]
           percentageNukeIncrease = this.getNukePercentageSkillIncrease(currentRotation[i], teamKiArray[i]) + this.getNukeLeaderIncrease(currentRotation[i], teamKiArray[i]);
         } else {
           percentageNukeIncrease = this.getNukeSkillIncrease(currentRotation[i], teamKiArray[i]);
@@ -288,8 +279,6 @@ class DokkanSim {
       }
       damageArray[0]['turn_info'].push(turnDamage);
     }
-    console.log(damageArray[0].turn_info[1]);
-
     for (let i = 0; i < damageArray[0].turn_info.length; i++) {
       damageArray[0]['total_damage'] = damageArray[0]['total_damage'] + damageArray[0].turn_info[i].total_damage;
     }
@@ -317,13 +306,13 @@ class DokkanSim {
       if (currentRotation[i].teamPassiveKi) {
         passivesArray[0] = passivesArray[0] + currentRotation[i].teamPassiveKi;
       }
-      if (currentRotation[i].teamPassivePercentage) {
-        passivesArray[0] = passivesArray[0] + currentRotation[i].teamPassivePercentage;
-      }
       if (currentRotation[i].teamPassiveFlat) {
-        passivesArray[0] = passivesArray[0] + currentRotation[i].teamPassiveFlat;
+        passivesArray[1] = passivesArray[1] + currentRotation[i].teamPassiveFlat;
       }
-    }
+      if (currentRotation[i].teamPassivePercentage) {
+        passivesArray[2] = passivesArray[2] + currentRotation[i].teamPassivePercentage;
+      }
+    }    
     return passivesArray;
   }
 
@@ -335,21 +324,15 @@ class DokkanSim {
       for (let j = 0; j < currentRotation[i].kiLinks.length; j++) {
         //Handles the previous character slot
         // IF - Checks that the current character isn't first in the rotation, checks the previous character doesn't share the same name, checks if the previous character has the same link skill, checks the link skill isn't already in the array if not ki link
-        
-        
         if ((i - 1) >= 0 && currentRotation[(i - 1)].name != currentRotation[i].name && currentRotation[(i - 1)].kiLinks.includes(currentRotation[i].kiLinks[j]) && (!linksArray[i].includes(currentRotation[i].kiLinks[j]) || currentRotation[i].kiLinks[j] === 'ki')) {
           linksArray[i].push(currentRotation[i].kiLinks[j]);
-          // console.log(currentRotation[(i-1)].name);
         }
         // Handles the next character slot
         if ((i + 1) <= 2 && currentRotation[(i + 1)].name != currentRotation[i].name && currentRotation[(i + 1)]['kiLinks'].includes(currentRotation[i].kiLinks[j]) && (!linksArray[i].includes(currentRotation[i].kiLinks[j]) || currentRotation[i].kiLinks[j] === 'ki')) {
           linksArray[i].push(currentRotation[i].kiLinks[j]);
-          console.log(currentRotation[(i)].name + "---" +currentRotation[(i+1)].name);
         }
       }
     } 
-    console.log(linksArray);
-    
     return linksArray;
   }
 
@@ -374,8 +357,6 @@ class DokkanSim {
 
   static getNormalAttack(card) {
     let normalAttack = card['currentAttack'] * (1 + this.activateOnAttackPercentage(card));
-
-
     normalAttack = normalAttack + this.activateOnAttackFlat(card);
     normalAttack = Math.round(normalAttack * (1 + this.getCurrentSABasedBuff(card)));
     return normalAttack;
@@ -417,7 +398,7 @@ class DokkanSim {
   static generateTypedKi() {
     // First number is the amount of ki, second is the chance of that number appearing. 
     // Adjust as needed.
-    let weighting = { 1: 0.1, 2: 0.2, 3: 0.3, 4: 0.2, 5: 0.1, 6: 0.05, 7: 0.025, 8: 0.025 };
+    let weighting = { 1: 0.05, 2: 0.15, 3: 0.15, 4: 0.2, 5: 0.1, 6: 0.1, 7: 0.05, 8: 0.05 , 9: 0.025, 10: 0.025, 11: 0.025, 12: 0.025};
     let i;
     let table = [];
     for (i in weighting) {
@@ -559,7 +540,6 @@ class DokkanSim {
   }
 
   static setCurrentKiMultiplier(card) {
-    // TODO Rework for LR supers above 12 ki
     if (card.currentKi > 12) {
       let percentageIncrease = (200 - card['12KiMultiplier']) / 12;
       let kiIncrease = card.currentKi - 12;
@@ -640,9 +620,7 @@ class DokkanSim {
 
   static getCurrentSABasedBuff(card) {
     let totalBuff = 0;
-
-    if (card.SABasedBuff.length > 0) {
-
+    if (card.SABasedBuff) {
       for (let i = 0; i < card.SABasedBuff.length; i++) {
         totalBuff = totalBuff + card.SABasedBuff[i][0];
       }

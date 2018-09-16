@@ -10,19 +10,6 @@ describe('DokkanSim', function () {
         singleCardEverything = { 'currentKi': 3, 'baseKi': 0, 'maxKi': 12, 'currentAttack': 5000, 'percentageTurnStart': function () { this.currentAttack += 1000; this.currentKi += 2; }, '12KiMultiplier': 150, 'neutralKiMultiplierValue': 4, 'buildUpPassive': 1.10 };
         singleCardMinimum = { 'currentKi': 3, 'currentAttack': 5000 };
     });
-    describe('activateLinkSkill()', function () {
-
-        it('should return an object', function () {
-            expect(DokkanSim.activateLinkSkill(singleCardEverything, [function (card) { return card['currentKi'] += 2 }, function (card) { return card['currentAttack'] += 5000; }])).to.be.an('Object');
-        });
-
-        it('should return the card with the correct currentKi value', function () {
-            expect(singleCardEverything['currentKi']).to.be.equal(5);
-        });
-        it('should return the card with the correct currentAttack value', function () {
-            expect(singleCardEverything['currentAttack']).to.be.equal(10000);
-        });
-    });
 
     describe('orderLeaderSkills()', function () {
         before(function () {

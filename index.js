@@ -588,11 +588,13 @@ class DokkanSim {
     return card;
   }
 
+  // Returns a card after applying the currentKiMultipler to the currentAttack
   static applyCurrentKiMultiplier(card) {
     card['currentAttack'] = Math.round(card['currentAttack'] * card['currentKiMultiplier']);
     return card;
   }
 
+  // Returns a card after applying the buildUpPassive to the currentAttack
   static applyBuildUpPassive(card) {
     if (card.buildUpPassive) {
       card['currentAttack'] = Math.round(card['currentAttack'] * card['buildUpPassive']);
@@ -600,6 +602,7 @@ class DokkanSim {
     return card;
   }
 
+    // Returns a number after running the onAttackPercentage function
   static activateOnAttackPercentage(card) {
     let percentage = 0;
     if (card.onAttackPercentage) {
@@ -608,6 +611,7 @@ class DokkanSim {
     return percentage;
   }
 
+    // Returns a number after running the onSAPercentage function
   static activateOnSAPercentage(card) {
     let percentage = 0;
     if (card.onSAPercentage) {
@@ -616,6 +620,7 @@ class DokkanSim {
     return percentage;
   }
 
+    // Returns a number after running the onAttackFlat function
   static activateOnAttackFlat(card) {
     let attack = 0;
     if (card.onAttackFlat) {
@@ -624,6 +629,7 @@ class DokkanSim {
     return attack;
   }
 
+    // Returns a number after running the onSAFlat function
   static activateOnSAFlat(card) {
     let attack = 0;
     if (card.onSAFlat) {
@@ -632,6 +638,7 @@ class DokkanSim {
     return attack;
   }
 
+    // Returns a card after running the multipleSA function.
   static activateMultipleSA(card) {
     if (card.multipleSA) {
       card.multipleSA();
@@ -642,7 +649,7 @@ class DokkanSim {
   // Runs the function required to set any SABasedBuff.
   // Standard SABasedBuff should be in the format [numberFloatRepresentingPercentageIncrease, numberTurnsRemainingOfBuff]
   // Function should always (unless Kaioken) subtract 1 from the turns remaining and remove any with a value of 0. 
-  // REWORK if team SA Based Buffs also apply here. e.g. TEQ Vegito +25% to allies on SA
+  // REWORK IF - team SA Based Buffs also apply here. e.g. TEQ Vegito +25% to allies on SA
   static activateSABasedBuff(card) {
     if (card.SABasedBuffFunction) {
       card.SABasedBuffFunction();
@@ -650,6 +657,7 @@ class DokkanSim {
     return card;
   }
 
+  // Returns a number after checking through the SABasedBuff attribute
   static getCurrentSABasedBuff(card) {
     let totalBuff = 0;
     if (card.SABasedBuff) {
@@ -670,6 +678,7 @@ class DokkanSim {
     }
   }
 
+  // Returns a boolean for whether an additional attack should super or not
   static additionalSARandomiser() {
     let random = Math.random();
     if (random >= 0.5) {
@@ -678,9 +687,9 @@ class DokkanSim {
       return false;
   }
 
+  // Returns a number representing the increase in attack from a crit.
   static critAttack(attackValue) {
     return Math.round(attackValue * 1.9);
-
   }
 }
 module.exports = DokkanSim;
